@@ -1,0 +1,98 @@
+<div class="topnav">
+    <a class="active" href="{% url 'form:index' %}">Home</a>
+</div> 
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<h1>Schedule a Event/Course</h1>
+<form action="{% url 'form:index' %}" method="post">
+<fieldset>
+    {% csrf_token %}
+    <label>Room:</label>
+    <select name="room" required>
+        <option label="" selected disabled></option>
+        {% for room in all_rooms %}
+        <option value="{{ room.roomid }}">Room Name: {{ room.roomname }}, Capacity: {{ room.capacity }}, Building: {{ room.buildingid.buildingname }}</option>
+        {% endfor %}
+    </select>
+    <br><br><br>
+    <label>Course or Event:</label>
+    <select name="course_event" required>
+        <option label="" selected disabled></option>
+        <optgroup label="Available Courses"></optgroup>
+        {% for course in all_courses %}
+            <option value="course_{{ course.courseid }}">Course Name: {{ course.coursename }}, Offered: {{ course.academicyear }}-{{ course.academicsemester }}, Instructor: {{ course.instructorid.facultyfirstname }} {{ course.instructorid.facultylastname }}</option>
+        {% endfor %}
+        <optgroup label="Available Events"></optgroup>
+        {% for event in all_events %}
+            <option value="event_{{ event.eventid }}">Event Name: {{ event.eventname }}, Main Contact: {{ event.maincontact.stafffirstname }} {{ event.maincontact.stafflastname }}</option>
+        {% endfor %}
+    </select>
+    <br><br><br>
+    <label>Expected Number of Participants:</label>
+    <input type="number" name="expectedparticipant" min="0" required>
+    <br><br><br>
+    <label>Detail:</label>
+    <textarea name="detail" rows="4" cols="50"></textarea>
+    <br><br><br>
+    <label>Schedule Date (specify the date of the first course/event if recurring):</label>
+    <input type="date" name="scheduleddate" required>
+    <br><br><br>
+    <label>Start Time:</label>
+    <input type="time" name="starttime" required>
+    <br><br><br>
+    <label>End Time:</label>
+    <input type="time" name="endtime" required>
+    <br><br><br>
+    <label>Recurring:</label>
+    <input type="radio" id="recurring_false" name="recurring" value=0 checked>
+    <label for="recurring_false">No</label>
+    <input type="radio" id="recurring_true" name="recurring" value=1>
+    <label for="recurring_true">Yes</label>
+    <br><br><br>
+    <label>Select Days of Week (if recurring):</label>
+    <br>
+    <input type="checkbox" id="Monday" name="recuring_days" value="Mon">
+    <label for="Monday"> Monday</label>
+    <input type="checkbox" id="Tuesday" name="recuring_days" value="Tue">
+    <label for="Tuesday"> Tuesday</label>
+    <input type="checkbox" id="Wednesday" name="recuring_days" value="Wed">
+    <label for="Wednesday"> Wednesday</label>
+    <input type="checkbox" id="Thursday" name="recuring_days" value="Thu">
+    <label for="Thursday"> Thursday</label>
+    <input type="checkbox" id="Friday" name="recuring_days" value="Fri">
+    <label for="Friday"> Friday</label>
+    <input type="checkbox" id="Saturday" name="recuring_days" value="Sat">
+    <label for="Saturday"> Saturday</label>
+    <input type="checkbox" id="Sunday" name="recuring_days" value="Sun">
+    <label for="Sunday"> Sunday</label>
+    <br><br><br>
+    <label>Recurring Start Date (if recurring):</label>
+    <input type="date" name="recurringstartdate">
+    <br><br><br>
+    <label>Recurring End Date (if recurring):</label>
+    <input type="date" name="recurringenddate">
+</fieldset><br>
+<input type="submit" value="Schedule">
+</form>
+
+<h1>Existing Schedules</h1>
+{% if all_schedules %}
+    <ul>
+        {% for schedule in all_schedules %}
+            {% if schedule.roomassignmentid.eventid.eventname %}
+                <li><a href="{% url 'form:detail' schedule.scheduleid %}">ScheduleID: {{ schedule.scheduleid }}, EventName: {{ schedule.roomassignmentid.eventid.eventname }}</a></li>
+            {% else %}
+                <li><a href="{% url 'form:detail' schedule.scheduleid %}">ScheduleID: {{ schedule.scheduleid }}, CourseName: {{ schedule.roomassignmentid.courseid.coursename }}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% else %}
+    <h3>No existing schedule</h3>
+{% endif %}

@@ -1,0 +1,31 @@
+<div class="topnav">
+    <a class="active" href="{% url 'form:index' %}">Home</a>
+</div> 
+
+<h1> Schedule Detail:</h1>
+<ul>
+    {% if schedule.roomassignmentid.eventid %}
+        <li>Event Name: {{ schedule.roomassignmentid.eventid.eventname }}</li>
+    {% endif %}
+    {% if schedule.roomassignmentid.courseid %}
+        <li>Course Name: {{ schedule.roomassignmentid.courseid.coursename }}</li>
+    {% endif %}
+    <li>Room: {{ schedule.roomassignmentid.roomid.roomname }}</li>
+    <li>Building: {{ schedule.roomassignmentid.roomid.buildingid.buildingname }}</li>
+
+    {% if schedule.scheduleddate %}
+        <li>Scheduled Date: {{ schedule.scheduleddate }}</li>
+    {% endif %}
+    <li>Start Time: {{ schedule.starttime }}</li>
+    <li>End Time: {{ schedule.endtime }}</li>
+    {% if schedule.recurring %}
+        <li>Day of Week: {{ schedule.dayofweek }}</li>
+        <li>Recurring Start Date: {{ schedule.recurringstartdate }}</li>
+        <li>Recurring End Date: {{ schedule.recurringenddate }}</li>
+    {% endif %}
+
+    <li>Expected Number of Participants: {{ schedule.roomassignmentid.expectedparticipant }}</li>
+    {% if schedule.roomassignmentid.detail %}
+        <li>Detail: {{ schedule.roomassignmentid.detail }}</li>
+    {% endif %}
+</ul>
