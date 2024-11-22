@@ -1,8 +1,8 @@
-# Event Scheduling System
+# OrgaNext-Event Scheduling System
 
-# Tomoki Kyotani; Yuan-Cheng Su
+# Shreyas Pandey, Sparsh Verma and Sumit Nishad
 
-## This Project is designed for a regional university/college resource management
+## This Project is designed for Innotech,2024. We have designed a regional university/college resource management system which is more efficient and includes new technology like Jupyter Notebook, AI, Microsoft Azure.
 
 ### Below are required software knowledge or database tools
 
