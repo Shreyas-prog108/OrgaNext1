@@ -34,6 +34,6 @@
 
 - ERDS
 
-<img src="/Database structure/DatabaseERdiagram(PostgresSQL).png"  title="SQL ERD">
+<img src="/Database Structure/DatabaseERdiagram(PostgresSQL).png"  title="SQL ERD">
 
-<img src="/Database structure/DatabaseERdiagram(Graphic).png"  title="Graphic ERD">
+<img src="/Database Structure/DatabaseERdiagram(Graphic).png"  title="Graphic ERD">
